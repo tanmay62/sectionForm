@@ -1,0 +1,51 @@
+<mat-stepper orientation="horizontal" linear>
+  <mat-step *ngFor="let section of sections; let i = index" [stepControl]="formGroups[section.section]">
+    <form [formGroup]="formGroups[section.section]">
+      <h3>{{ section.section }}</h3>
+
+      <div *ngFor="let parameter of section.parameters" [formGroupName]="parameter.paramName">
+
+        <ng-container *ngIf="formGroups[section.section].get(parameter.paramName)?.get('paramType')?.value === 'Free Text'">
+          <div class="param-field">
+            <span>{{ parameter.paramName }}:</span>
+            <mat-form-field appearance="outline" class="inline-field">
+              <input matInput formControlName="value" placeholder="Enter {{ parameter.paramName }}" />
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="formGroups[section.section].get(parameter.paramName)?.get('paramType')?.value === 'Dropdown'">
+          <div class="param-field">
+            <span>{{ parameter.paramName }}:</span>
+            <mat-form-field appearance="outline" class="inline-field">
+              <mat-select formControlName="value" multiple>
+                <mat-option *ngFor="let option of articles" [value]="option">{{ option }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="formGroups[section.section].get(parameter.paramName)?.get('paramType')?.value === 'Date time'">
+          <div class="param-field">
+            <span>{{ parameter.paramName }}:</span>
+            <mat-form-field appearance="outline" class="inline-field">
+              <input matInput [matDatepicker]="picker" formControlName="value" placeholder="Select date" />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </ng-container>
+
+
+      </div>
+
+      <button mat-raised-button color="primary" (click)="saveSection(section.section)">
+        Save Section
+      </button>
+    </form>
+  </mat-step>
+</mat-stepper>
+
+<div class="button-container">
+  <button mat-raised-button color="accent" (click)="finalizeChecklist()">Finalize Checklist</button>
+</div>

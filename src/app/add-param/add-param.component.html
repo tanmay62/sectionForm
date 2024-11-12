@@ -1,0 +1,51 @@
+<form [formGroup]="addParamForm">
+  <div formArrayName="sections">
+    <div *ngFor="let section of sections.controls; let i = index" [formGroupName]="i">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Section</mat-label>
+        <mat-select formControlName="section" required>
+          <mat-option *ngFor="let option of sectionOptions" [value]="option">
+            {{ option }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div formArrayName="parameters">
+        <div *ngFor="let parameter of getParameters(i).controls; let j = index" [formGroupName]="j">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Param Name</mat-label>
+            <input matInput formControlName="paramName" required />
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Param Type</mat-label>
+            <mat-select formControlName="paramType" required>
+              <mat-option *ngFor="let type of paramTypes" [value]="type">
+                {{ type }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="parameter.get('paramType')?.value === 'Dropdown'" appearance="outline" class="full-width">
+            <mat-label>Article</mat-label>
+            <mat-select formControlName="article" multiple>
+              <mat-option *ngFor="let article of articleOptions" [value]="article">
+                {{ article }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <button mat-raised-button color="warn" (click)="removeParameter(i, j)">Remove Parameter</button>
+        </div>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="addParameter(i)">Add Parameter</button>
+      <button mat-raised-button color="warn" (click)="removeSection(i)">Remove Section</button>
+    </div>
+  </div>
+
+  <div class="button-container">
+    <button mat-raised-button color="primary" (click)="addSection()">Add Section</button>
+    <button mat-raised-button color="accent" (click)="save()">Save</button>
+  </div>
+</form>

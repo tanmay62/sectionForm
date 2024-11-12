@@ -1,0 +1,24 @@
+<div *ngIf="checkData.length > 0">
+  <div *ngFor="let data of checkData" class="section">
+    <h3 class="section-title">{{ data.section }}</h3>
+    <table class="checklist-table">
+      <thead>
+        <tr>
+          <th>Parameters</th>
+          <th>Observations</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let parameter of data.parameters">
+          <td>{{ parameter?.paramName }}</td>
+          <td>{{ parameter?.value }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <br /><br /><br />
+</div>
+
+<div *ngIf="checkData.length === 0">
+  <h1>No data available.</h1>
+</div>

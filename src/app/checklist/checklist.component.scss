@@ -1,0 +1,29 @@
+.section {
+  margin-bottom: 20px;
+  border: 1px solid #333;
+}
+
+.section-title {
+  background-color: #f3f3f3;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  border-bottom: 1px solid #333;
+}
+
+.checklist-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.checklist-table th,
+.checklist-table td {
+  border: 1px solid #333;
+  padding: 8px;
+  text-align: left;
+}
+
+.checklist-table th {
+  background-color: #e6e6e6;
+  font-weight: bold;
+}
