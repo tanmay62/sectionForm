@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChecklistDataService } from '../checklist-data.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';

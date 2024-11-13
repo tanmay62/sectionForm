@@ -27,6 +27,8 @@ export class AddParamComponent {
   paramTypes: string[] = ['Free Text', 'Date time', 'Dropdown'];
   sectionOptions: string[] = ['Section 1', 'Section 2', 'Section 3'];
   articleOptions: string[] = ['Article 1', 'Article 2', 'Article 3'];
+  sectionNames : string[] = [];
+  removed: any;
 
   constructor(private fb: FormBuilder, public dialog: MatDialog, private router: Router) {
     this.addParamForm = this.fb.group({
@@ -44,6 +46,29 @@ export class AddParamComponent {
       section: ['', Validators.required],
       parameters: this.fb.array([])
     });
+    console.log(sectionGroup);
+
+    sectionGroup.get('section')?.valueChanges.subscribe((sectionName: string | null) => {
+      if (sectionName) {
+        const existingSectionIndex = this.sections.controls.findIndex(
+          control => control.get('section')?.value === sectionName
+        );
+
+        if (existingSectionIndex !== -1 && existingSectionIndex !== this.sections.length - 1) {
+          const existingParameters = this.getParameters(existingSectionIndex);
+          const newParameters = this.getParameters(this.sections.length - 1);
+
+          while (newParameters.length) {
+            existingParameters.push(newParameters.at(0));
+            newParameters.removeAt(0);
+          }
+
+          this.sections.removeAt(this.sections.length - 1);
+        }
+      }
+    });
+
+
     this.sections.push(sectionGroup);
     this.addParameter(this.sections.length - 1);
   }
